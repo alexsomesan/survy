@@ -1,0 +1,187 @@
+ipv4     2 tcp      6 48841 ESTABLISHED src=192.168.2.161 dst=198.51.100.1 sport=60814 dport=443 src=198.51.100.1 dst=203.0.113.176 sport=443 dport=60814 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.109 dst=192.168.2.3 sport=49396 dport=8080 src=172.31.254.3 dst=192.168.2.109 sport=8080 dport=49396 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 14 src=203.0.113.176 dst=198.51.100.2 sport=32393 dport=53 src=198.51.100.2 dst=203.0.113.176 sport=53 dport=32393 mark=0 zone=0 use=2
+ipv6     10 tcp      6 225399 ESTABLISHED src=2001:0db8:0001:0001:008d:94c1:44fd:b0a9 dst=2001:db8:ffff::1 sport=65386 dport=443 src=2001:db8:ffff::1 dst=2001:0db8:0001:0001:008d:94c1:44fd:b0a9 sport=443 dport=65386 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.173 dst=198.51.100.3 sport=53552 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=53552 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 udp      17 19 src=fe80:0000:0000:0000:3831:c4ff:fe23:724d dst=2001:db8:ffff::2 sport=53805 dport=53805 [UNREPLIED] src=2001:db8:ffff::2 dst=fe80:0000:0000:0000:3831:c4ff:fe23:724d sport=53805 dport=53805 mark=0 zone=0 use=2
+ipv4     2 tcp      6 104 TIME_WAIT src=192.168.2.173 dst=192.168.2.1 sport=43522 dport=22 src=192.168.2.1 dst=192.168.2.173 sport=22 dport=43522 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 icmp     1 16 src=192.168.2.170 dst=192.168.2.1 type=8 code=0 id=5598 src=192.168.2.1 dst=192.168.2.170 type=0 code=0 id=5598 mark=0 zone=0 use=2
+ipv6     10 udp      17 8 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::3 sport=40233 dport=53 src=2001:db8:ffff::3 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=40233 mark=0 zone=0 use=2
+ipv4     2 tcp      6 109081 ESTABLISHED src=192.168.2.112 dst=198.51.100.4 sport=34400 dport=443 src=198.51.100.4 dst=203.0.113.176 sport=443 dport=34400 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.5 sport=36018 dport=53 src=198.51.100.5 dst=203.0.113.176 sport=53 dport=36018 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.118 dst=198.51.100.6 sport=65211 dport=8883 src=198.51.100.6 dst=203.0.113.176 sport=8883 dport=65211 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 src=192.168.2.114 dst=192.168.2.3 sport=57049 dport=3478 src=172.31.254.3 dst=192.168.2.114 sport=3478 dport=57049 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 src=192.168.2.170 dst=198.51.100.7 sport=46296 dport=443 src=198.51.100.7 dst=203.0.113.176 sport=443 dport=46296 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 48212 ESTABLISHED src=192.168.2.161 dst=198.51.100.8 sport=56739 dport=5228 src=198.51.100.8 dst=203.0.113.176 sport=5228 dport=56739 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 85699 ESTABLISHED src=192.168.2.149 dst=198.51.100.9 sport=61974 dport=5223 src=198.51.100.9 dst=203.0.113.176 sport=5223 dport=61974 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 src=192.168.2.109 dst=192.168.2.3 sport=35793 dport=3478 src=172.31.254.3 dst=192.168.2.109 sport=3478 dport=35793 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.10 sport=14765 dport=53 src=198.51.100.10 dst=203.0.113.176 sport=53 dport=14765 mark=0 zone=0 use=2
+ipv6     10 icmpv6   58 29 src=fe80:0000:0000:0000:2a70:4eff:fe9e:1aaa dst=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 type=128 code=0 id=2 src=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 dst=fe80:0000:0000:0000:2a70:4eff:fe9e:1aaa type=129 code=0 id=2 mark=0 zone=0 use=2
+ipv4     2 tcp      6 86348 ESTABLISHED src=192.168.2.104 dst=198.51.100.11 sport=50362 dport=443 src=198.51.100.11 dst=203.0.113.176 sport=443 dport=50362 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 54 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=57408 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=57408 mark=0 zone=0 use=2
+ipv4     2 tcp      6 78880 ESTABLISHED src=192.168.2.163 dst=198.51.100.3 sport=49858 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=49858 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 1 src=2001:0db8:0001:0001:093d:cd1e:3ca3:562f dst=2001:db8:ffff::4 sport=65255 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:093d:cd1e:3ca3:562f sport=443 dport=65255 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.173 dst=198.51.100.3 sport=54002 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=54002 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 src=192.168.2.139 dst=198.51.100.12 sport=59502 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=59502 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 391028 ESTABLISHED src=192.168.2.165 dst=198.51.100.13 sport=36884 dport=443 src=198.51.100.13 dst=203.0.113.176 sport=443 dport=36884 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48983 ESTABLISHED src=192.168.2.161 dst=198.51.100.3 sport=59257 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=59257 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::5 sport=17688 dport=53 src=2001:db8:ffff::5 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=17688 mark=0 zone=0 use=2
+ipv4     2 tcp      6 78236 ESTABLISHED src=192.168.2.175 dst=198.51.100.14 sport=49456 dport=5228 src=198.51.100.14 dst=203.0.113.176 sport=5228 dport=49456 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.107 dst=192.168.2.3 sport=32984 dport=8080 src=172.31.254.3 dst=192.168.2.107 sport=8080 dport=32984 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 tcp      6 431978 ESTABLISHED src=2001:0db8:0001:0001:d4a0:8432:55c1:f920 dst=2001:db8:ffff::6 sport=52574 dport=443 src=2001:db8:ffff::6 dst=2001:0db8:0001:0001:d4a0:8432:55c1:f920 sport=443 dport=52574 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.170 dst=198.51.100.15 sport=60090 dport=443 src=198.51.100.15 dst=203.0.113.176 sport=443 dport=60090 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 48521 ESTABLISHED src=192.168.2.161 dst=198.51.100.16 sport=51496 dport=443 src=198.51.100.16 dst=203.0.113.176 sport=443 dport=51496 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48827 ESTABLISHED src=192.168.2.161 dst=198.51.100.17 sport=60816 dport=443 src=198.51.100.17 dst=203.0.113.176 sport=443 dport=60816 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 49164 ESTABLISHED src=192.168.2.161 dst=198.51.100.3 sport=61086 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=61086 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 icmpv6   58 27 src=fe80:0000:0000:0000:8e30:66ff:fe79:35ae dst=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 type=128 code=0 id=2 src=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 dst=fe80:0000:0000:0000:8e30:66ff:fe79:35ae type=129 code=0 id=2 mark=0 zone=0 use=2
+ipv4     2 tcp      6 85374 ESTABLISHED src=192.168.2.211 dst=198.51.100.18 sport=54640 dport=5228 src=198.51.100.18 dst=203.0.113.176 sport=5228 dport=54640 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.19 sport=1084 dport=53 src=198.51.100.19 dst=203.0.113.176 sport=53 dport=1084 mark=0 zone=0 use=2
+ipv4     2 udp      17 src=192.168.2.106 dst=192.168.2.3 sport=45044 dport=3478 src=172.31.254.3 dst=192.168.2.106 sport=3478 dport=45044 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 145318 ESTABLISHED src=192.168.2.133 dst=198.51.100.4 sport=43844 dport=443 src=198.51.100.4 dst=203.0.113.176 sport=443 dport=43844 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 14 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::7 sport=11300 dport=53 src=2001:db8:ffff::7 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=11300 mark=0 zone=0 use=2
+ipv4     2 tcp      6 66 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=56454 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=56454 mark=0 zone=0 use=2
+ipv4     2 tcp      6 391028 ESTABLISHED src=192.168.2.165 dst=198.51.100.13 sport=36886 dport=443 src=198.51.100.13 dst=203.0.113.176 sport=443 dport=36886 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 8 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::8 sport=7525 dport=53 src=2001:db8:ffff::8 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=7525 mark=0 zone=0 use=2
+ipv4     2 tcp      6 8 CLOSE src=192.168.2.107 dst=192.168.2.3 sport=44948 dport=8080 src=172.31.254.3 dst=192.168.2.107 sport=8080 dport=44948 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48198 ESTABLISHED src=192.168.2.165 dst=198.51.100.20 sport=37618 dport=5228 src=198.51.100.20 dst=203.0.113.176 sport=5228 dport=37618 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.21 sport=1841 dport=53 src=198.51.100.21 dst=203.0.113.176 sport=53 dport=1841 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431992 ESTABLISHED src=2001:0db8:0001:0001:f083:06b4:6a3e:dafd dst=2001:db8:ffff::4 sport=54222 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:f083:06b4:6a3e:dafd sport=443 dport=54222 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 45650 ESTABLISHED src=192.168.2.165 dst=198.51.100.22 sport=40320 dport=443 src=198.51.100.22 dst=203.0.113.176 sport=443 dport=40320 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 122 src=192.168.2.200 dst=198.51.100.23 sport=62593 dport=443 src=198.51.100.23 dst=203.0.113.176 sport=443 dport=62593 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 60879 ESTABLISHED src=192.168.2.169 dst=198.51.100.24 sport=47560 dport=443 src=198.51.100.24 dst=203.0.113.176 sport=443 dport=47560 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.25 sport=41147 dport=53 src=198.51.100.25 dst=203.0.113.176 sport=53 dport=41147 mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.26 sport=51411 dport=53 src=198.51.100.26 dst=203.0.113.176 sport=53 dport=51411 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::5 sport=51572 dport=53 src=2001:db8:ffff::5 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=51572 mark=0 zone=0 use=2
+ipv4     2 tcp      6 86346 ESTABLISHED src=192.168.2.173 dst=198.51.100.3 sport=55468 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=55468 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 49156 ESTABLISHED src=192.168.2.161 dst=198.51.100.27 sport=53702 dport=443 src=198.51.100.27 dst=203.0.113.176 sport=443 dport=53702 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 44135 ESTABLISHED src=192.168.2.211 dst=198.51.100.28 sport=57080 dport=443 src=198.51.100.28 dst=203.0.113.176 sport=443 dport=57080 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.29 sport=64052 dport=53 src=198.51.100.29 dst=203.0.113.176 sport=53 dport=64052 mark=0 zone=0 use=2
+ipv4     2 tcp      6 261034 ESTABLISHED src=192.168.2.151 dst=198.51.100.4 sport=54610 dport=443 src=198.51.100.4 dst=203.0.113.176 sport=443 dport=54610 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 109081 ESTABLISHED src=192.168.2.112 dst=198.51.100.4 sport=34410 dport=443 src=198.51.100.4 dst=203.0.113.176 sport=443 dport=34410 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 423788 ESTABLISHED src=192.168.2.175 dst=198.51.100.24 sport=33046 dport=443 src=198.51.100.24 dst=203.0.113.176 sport=443 dport=33046 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 42 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=39456 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=39456 mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.30 sport=10074 dport=53 src=198.51.100.30 dst=203.0.113.176 sport=53 dport=10074 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431929 ESTABLISHED src=2001:0db8:0001:0001:d4a0:8432:55c1:f920 dst=2001:db8:ffff::9 sport=62391 dport=443 src=2001:db8:ffff::9 dst=2001:0db8:0001:0001:d4a0:8432:55c1:f920 sport=443 dport=62391 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48436 ESTABLISHED src=192.168.2.161 dst=198.51.100.31 sport=61829 dport=443 src=198.51.100.31 dst=203.0.113.176 sport=443 dport=61829 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 3696 ESTABLISHED src=192.168.2.149 dst=198.51.100.32 sport=49153 dport=443 src=198.51.100.32 dst=203.0.113.176 sport=443 dport=49153 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48820 ESTABLISHED src=192.168.2.161 dst=198.51.100.17 sport=61760 dport=443 src=198.51.100.17 dst=203.0.113.176 sport=443 dport=61760 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 49163 ESTABLISHED src=192.168.2.161 dst=198.51.100.3 sport=52738 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=52738 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 112197 ESTABLISHED src=2001:0db8:0001:0001:dc9d:7d19:0863:90ef dst=2001:db8:ffff::a sport=63011 dport=5228 src=2001:db8:ffff::a dst=2001:0db8:0001:0001:dc9d:7d19:0863:90ef sport=5228 dport=63011 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.170 dst=198.51.100.33 sport=36076 dport=443 src=198.51.100.33 dst=203.0.113.176 sport=443 dport=36076 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 72 TIME_WAIT src=192.168.2.173 dst=192.168.2.1 sport=48300 dport=22 src=192.168.2.1 dst=192.168.2.173 sport=22 dport=48300 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 78378 ESTABLISHED src=192.168.2.139 dst=198.51.100.12 sport=57479 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=57479 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 8 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::b sport=62019 dport=53 src=2001:db8:ffff::b dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=62019 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::c sport=64211 dport=53 src=2001:db8:ffff::c dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=64211 mark=0 zone=0 use=2
+ipv4     2 tcp      6 4 CLOSE src=192.168.2.114 dst=192.168.2.3 sport=48662 dport=8080 src=172.31.254.3 dst=192.168.2.114 sport=8080 dport=48662 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=192.168.2.139 dst=192.168.2.1 sport=64977 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=64977 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:0001:0001:d4a0:8432:55c1:f920 dst=2001:db8:ffff::d sport=54466 dport=443 src=2001:db8:ffff::d dst=2001:0db8:0001:0001:d4a0:8432:55c1:f920 sport=443 dport=54466 mark=0 zone=0 use=2
+ipv4     2 tcp      6 48341 ESTABLISHED src=192.168.2.161 dst=198.51.100.34 sport=52510 dport=4070 src=198.51.100.34 dst=203.0.113.176 sport=4070 dport=52510 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48590 ESTABLISHED src=192.168.2.161 dst=198.51.100.35 sport=57573 dport=443 src=198.51.100.35 dst=203.0.113.176 sport=443 dport=57573 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.36 sport=12008 dport=53 src=198.51.100.36 dst=203.0.113.176 sport=53 dport=12008 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431949 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::4 sport=51082 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=443 dport=51082 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 431985 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::4 sport=43374 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=443 dport=43374 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 431999 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::4 sport=42422 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=443 dport=42422 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 85706 ESTABLISHED src=192.168.2.211 dst=198.51.100.37 sport=57007 dport=5223 src=198.51.100.37 dst=203.0.113.176 sport=5223 dport=57007 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.106 dst=192.168.2.3 sport=46890 dport=8080 src=172.31.254.3 dst=192.168.2.106 sport=8080 dport=46890 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 icmpv6   58 26 src=fe80:0000:0000:0000:8e30:66ff:fea1:5f9a dst=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 type=128 code=0 id=2 src=fe80:0000:0000:0000:f405:ffff:fe70:6ea5 dst=fe80:0000:0000:0000:8e30:66ff:fea1:5f9a type=129 code=0 id=2 mark=0 zone=0 use=2
+ipv4     2 tcp      6 130973 ESTABLISHED src=192.168.2.125 dst=198.51.100.13 sport=40424 dport=443 src=198.51.100.13 dst=203.0.113.176 sport=443 dport=40424 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::e sport=39541 dport=53 src=2001:db8:ffff::e dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=39541 mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.30 sport=37567 dport=53 src=198.51.100.30 dst=203.0.113.176 sport=53 dport=37567 mark=0 zone=0 use=2
+ipv4     2 tcp      6 1 CLOSE src=192.168.2.106 dst=192.168.2.3 sport=38504 dport=8080 src=172.31.254.3 dst=192.168.2.106 sport=8080 dport=38504 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 8 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::b sport=15184 dport=53 src=2001:db8:ffff::b dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=15184 mark=0 zone=0 use=2
+ipv4     2 tcp      6 45759 ESTABLISHED src=192.168.2.165 dst=198.51.100.38 sport=37084 dport=4070 src=198.51.100.38 dst=203.0.113.176 sport=4070 dport=37084 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=192.168.2.139 dst=192.168.2.1 sport=64664 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=64664 mark=0 zone=0 use=2
+ipv4     2 tcp      6 7 CLOSE src=192.168.2.128 dst=198.51.100.39 sport=34018 dport=61443 src=198.51.100.39 dst=203.0.113.176 sport=61443 dport=34018 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.172 dst=198.51.100.40 sport=64910 dport=443 src=198.51.100.40 dst=203.0.113.176 sport=443 dport=64910 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 tcp      6 429321 ESTABLISHED src=2001:0db8:0001:0001:54bc:24bd:683c:810f dst=2001:db8:ffff::4 sport=63408 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:54bc:24bd:683c:810f sport=443 dport=63408 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 78266 ESTABLISHED src=192.168.2.175 dst=198.51.100.24 sport=46976 dport=443 src=198.51.100.24 dst=203.0.113.176 sport=443 dport=46976 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 406479 ESTABLISHED src=192.168.2.169 dst=198.51.100.24 sport=47564 dport=443 src=198.51.100.24 dst=203.0.113.176 sport=443 dport=47564 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 61675 ESTABLISHED src=192.168.2.169 dst=198.51.100.38 sport=40310 dport=4070 src=198.51.100.38 dst=203.0.113.176 sport=4070 dport=40310 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 34408 ESTABLISHED src=192.168.2.211 dst=198.51.100.20 sport=51859 dport=5228 src=198.51.100.20 dst=203.0.113.176 sport=5228 dport=51859 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 431999 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::f sport=48418 dport=443 src=2001:db8:ffff::f dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=443 dport=48418 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.193 dst=198.51.100.41 sport=54625 dport=6126 src=198.51.100.41 dst=203.0.113.176 sport=6126 dport=54625 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 tcp      6 431982 ESTABLISHED src=2001:0db8:0001:0001:aa1d:16ff:fefd:ae58 dst=2001:db8:ffff::6 sport=59814 dport=443 src=2001:db8:ffff::6 dst=2001:0db8:0001:0001:aa1d:16ff:fefd:ae58 sport=443 dport=59814 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 icmp     1 29 src=192.168.2.109 dst=192.168.2.1 type=8 code=0 id=1 src=192.168.2.1 dst=192.168.2.109 type=0 code=0 id=1 mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.42 sport=17750 dport=53 src=198.51.100.42 dst=203.0.113.176 sport=53 dport=17750 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431989 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::4 sport=58100 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=443 dport=58100 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 102 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=57946 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=57946 mark=0 zone=0 use=2
+ipv4     2 tcp      6 45772 ESTABLISHED src=192.168.2.139 dst=198.51.100.12 sport=52681 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=52681 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 45778 ESTABLISHED src=192.168.2.165 dst=198.51.100.43 sport=40070 dport=443 src=198.51.100.43 dst=203.0.113.176 sport=443 dport=40070 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=192.168.2.139 dst=192.168.2.1 sport=58887 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=58887 mark=0 zone=0 use=2
+ipv4     2 udp      17 14 src=203.0.113.176 dst=198.51.100.44 sport=65081 dport=53 src=198.51.100.44 dst=203.0.113.176 sport=53 dport=65081 mark=0 zone=0 use=2
+ipv4     2 tcp      6 86360 ESTABLISHED src=192.168.2.104 dst=198.51.100.45 sport=49823 dport=8883 src=198.51.100.45 dst=203.0.113.176 sport=8883 dport=49823 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 151 src=2001:0db8:0001:0001:093d:cd1e:3ca3:562f dst=2001:db8:ffff::4 sport=60935 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:093d:cd1e:3ca3:562f sport=443 dport=60935 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.239 dst=198.51.100.46 sport=31104 dport=443 src=198.51.100.46 dst=203.0.113.176 sport=443 dport=31104 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 83024 ESTABLISHED src=192.168.2.149 dst=198.51.100.47 sport=63278 dport=443 src=198.51.100.47 dst=203.0.113.176 sport=443 dport=63278 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 431999 ESTABLISHED src=192.168.2.173 dst=192.168.2.1 sport=55910 dport=22 src=192.168.2.1 dst=192.168.2.173 sport=22 dport=55910 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::5 sport=39538 dport=53 src=2001:db8:ffff::5 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=39538 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.170 dst=198.51.100.12 sport=37464 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=37464 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 7 src=192.168.2.139 dst=192.168.2.1 sport=58320 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=58320 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::10 sport=61508 dport=53 src=2001:db8:ffff::10 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=61508 mark=0 zone=0 use=2
+ipv6     10 tcp      6 218 ESTABLISHED src=2001:0db8:0001:0001:54bc:24bd:683c:810f dst=2001:db8:ffff::4 sport=59059 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:54bc:24bd:683c:810f sport=443 dport=59059 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 30 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=42108 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=42108 mark=0 zone=0 use=2
+ipv4     2 udp      17 src=192.168.2.139 dst=198.51.100.48 sport=4500 dport=4500 src=198.51.100.48 dst=203.0.113.176 sport=4500 dport=4500 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 src=192.168.2.107 dst=192.168.2.3 sport=56388 dport=3478 src=172.31.254.3 dst=192.168.2.107 sport=3478 dport=56388 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 49083 ESTABLISHED src=192.168.2.161 dst=198.51.100.3 sport=60520 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=60520 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 61566 ESTABLISHED src=192.168.2.169 dst=198.51.100.31 sport=53848 dport=443 src=198.51.100.31 dst=203.0.113.176 sport=443 dport=53848 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.139 dst=198.51.100.49 sport=59501 dport=443 src=198.51.100.49 dst=203.0.113.176 sport=443 dport=59501 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 6 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=45752 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=45752 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431989 ESTABLISHED src=2001:0db8:0001:0001:d4a0:8432:55c1:f920 dst=2001:db8:ffff::11 sport=52492 dport=443 src=2001:db8:ffff::11 dst=2001:0db8:0001:0001:d4a0:8432:55c1:f920 sport=443 dport=52492 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 48814 ESTABLISHED src=192.168.2.161 dst=198.51.100.50 sport=50139 dport=443 src=198.51.100.50 dst=203.0.113.176 sport=443 dport=50139 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 78188 ESTABLISHED src=192.168.2.175 dst=198.51.100.24 sport=33050 dport=443 src=198.51.100.24 dst=203.0.113.176 sport=443 dport=33050 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::10 sport=40389 dport=53 src=2001:db8:ffff::10 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=40389 mark=0 zone=0 use=2
+ipv4     2 tcp      6 18 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=42576 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=42576 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::5 sport=46807 dport=53 src=2001:db8:ffff::5 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=46807 mark=0 zone=0 use=2
+ipv4     2 udp      17 14 src=203.0.113.176 dst=198.51.100.51 sport=10090 dport=53 src=198.51.100.51 dst=203.0.113.176 sport=53 dport=10090 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.139 dst=198.51.100.12 sport=59504 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=59504 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 tcp      6 431973 ESTABLISHED src=2001:0db8:0001:0001:093d:cd1e:3ca3:562f dst=2001:db8:ffff::12 sport=54861 dport=5223 src=2001:db8:ffff::12 dst=2001:0db8:0001:0001:093d:cd1e:3ca3:562f sport=5223 dport=54861 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 78 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=37972 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=37972 mark=0 zone=0 use=2
+ipv4     2 udp      17 19 src=192.168.2.127 dst=255.255.255.255 sport=53805 dport=53805 [UNREPLIED] src=255.255.255.255 dst=192.168.2.127 sport=53805 dport=53805 mark=0 zone=0 use=2
+ipv6     10 udp      17 7 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::13 sport=31840 dport=53 src=2001:db8:ffff::13 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=31840 mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=192.168.2.139 dst=192.168.2.1 sport=65491 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=65491 mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=192.168.2.139 dst=192.168.2.1 sport=57797 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=57797 mark=0 zone=0 use=2
+ipv6     10 udp      17 14 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::14 sport=7024 dport=53 src=2001:db8:ffff::14 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=7024 mark=0 zone=0 use=2
+ipv4     2 icmp     1 26 src=192.168.2.107 dst=192.168.2.1 type=8 code=0 id=1 src=192.168.2.1 dst=192.168.2.107 type=0 code=0 id=1 mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.52 sport=6866 dport=53 src=198.51.100.52 dst=203.0.113.176 sport=53 dport=6866 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.139 dst=198.51.100.49 sport=59503 dport=443 src=198.51.100.49 dst=203.0.113.176 sport=443 dport=59503 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 84627 ESTABLISHED src=192.168.2.193 dst=198.51.100.53 sport=48301 dport=443 src=198.51.100.53 dst=203.0.113.176 sport=443 dport=48301 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.36 sport=36636 dport=53 src=198.51.100.36 dst=203.0.113.176 sport=53 dport=36636 mark=0 zone=0 use=2
+ipv4     2 tcp      6 48351 ESTABLISHED src=192.168.2.161 dst=198.51.100.54 sport=60666 dport=443 src=198.51.100.54 dst=203.0.113.176 sport=443 dport=60666 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.42 sport=30800 dport=53 src=198.51.100.42 dst=203.0.113.176 sport=53 dport=30800 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431304 ESTABLISHED src=2001:0db8:0001:0001:54bc:24bd:683c:810f dst=2001:db8:ffff::15 sport=51459 dport=5228 src=2001:db8:ffff::15 dst=2001:0db8:0001:0001:54bc:24bd:683c:810f sport=5228 dport=51459 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 14 src=203.0.113.176 dst=198.51.100.55 sport=59880 dport=53 src=198.51.100.55 dst=203.0.113.176 sport=53 dport=59880 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431681 ESTABLISHED src=2001:0db8:0001:0001:aa1d:16ff:fefd:ae58 dst=2001:db8:ffff::16 sport=42434 dport=443 src=2001:db8:ffff::16 dst=2001:0db8:0001:0001:aa1d:16ff:fefd:ae58 sport=443 dport=42434 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 114 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=45488 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=45488 mark=0 zone=0 use=2
+ipv4     2 tcp      6 48462 ESTABLISHED src=192.168.2.161 dst=198.51.100.56 sport=51535 dport=443 src=198.51.100.56 dst=203.0.113.176 sport=443 dport=51535 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 431302 ESTABLISHED src=2001:0db8:0001:0001:54bc:24bd:683c:810f dst=2001:db8:ffff::15 sport=60821 dport=5228 src=2001:db8:ffff::15 dst=2001:0db8:0001:0001:54bc:24bd:683c:810f sport=5228 dport=60821 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.115 dst=198.51.100.57 sport=51606 dport=8883 src=198.51.100.57 dst=203.0.113.176 sport=8883 dport=51606 [OFFLOAD] mark=0 zone=0 use=3
+ipv6     10 udp      17 151 src=2001:0db8:0001:0001:093d:cd1e:3ca3:562f dst=2001:db8:ffff::4 sport=57328 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:093d:cd1e:3ca3:562f sport=443 dport=57328 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 26 src=192.168.2.115 dst=255.255.255.255 sport=2021 dport=2021 [UNREPLIED] src=255.255.255.255 dst=192.168.2.115 sport=2021 dport=2021 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.193 dst=198.51.100.38 sport=53229 dport=443 src=198.51.100.38 dst=203.0.113.176 sport=443 dport=53229 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 8 src=203.0.113.176 dst=198.51.100.5 sport=27867 dport=53 src=198.51.100.5 dst=203.0.113.176 sport=53 dport=27867 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431995 ESTABLISHED src=2001:0db8:0001:0001:104e:73c8:7ede:5133 dst=2001:db8:ffff::17 sport=35216 dport=443 src=2001:db8:ffff::17 dst=2001:0db8:0001:0001:104e:73c8:7ede:5133 sport=443 dport=35216 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 61852 ESTABLISHED src=192.168.2.169 dst=198.51.100.58 sport=42084 dport=443 src=198.51.100.58 dst=203.0.113.176 sport=443 dport=42084 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.59 sport=19698 dport=53 src=198.51.100.59 dst=203.0.113.176 sport=53 dport=19698 mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=172.31.254.3 dst=198.51.100.60 sport=35496 dport=8883 src=198.51.100.60 dst=203.0.113.176 sport=8883 dport=35496 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 8 src=192.168.2.139 dst=192.168.2.1 sport=55699 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=55699 mark=0 zone=0 use=2
+ipv4     2 icmp     1 27 src=192.168.2.106 dst=192.168.2.1 type=8 code=0 id=1 src=192.168.2.1 dst=192.168.2.106 type=0 code=0 id=1 mark=0 zone=0 use=2
+ipv4     2 tcp      6 85961 ESTABLISHED src=192.168.2.149 dst=198.51.100.61 sport=59069 dport=443 src=198.51.100.61 dst=203.0.113.176 sport=443 dport=59069 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.173 dst=198.51.100.3 sport=47378 dport=443 src=198.51.100.3 dst=203.0.113.176 sport=443 dport=47378 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 udp      17 src=192.168.2.128 dst=198.51.100.39 sport=50332 dport=61443 src=198.51.100.39 dst=203.0.113.176 sport=61443 dport=50332 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 61564 ESTABLISHED src=192.168.2.169 dst=198.51.100.18 sport=41284 dport=443 src=198.51.100.18 dst=203.0.113.176 sport=443 dport=41284 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 61695 ESTABLISHED src=192.168.2.139 dst=198.51.100.12 sport=53251 dport=443 src=198.51.100.12 dst=203.0.113.176 sport=443 dport=53251 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 8 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::18 sport=41899 dport=53 src=2001:db8:ffff::18 dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=41899 mark=0 zone=0 use=2
+ipv4     2 tcp      6 48213 ESTABLISHED src=192.168.2.161 dst=198.51.100.8 sport=60782 dport=5228 src=198.51.100.8 dst=203.0.113.176 sport=5228 dport=60782 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 src=192.168.2.114 dst=192.168.2.3 sport=48664 dport=8080 src=172.31.254.3 dst=192.168.2.114 sport=8080 dport=48664 [OFFLOAD] mark=0 zone=0 use=3
+ipv4     2 tcp      6 4 CLOSE src=192.168.2.109 dst=192.168.2.3 sport=38762 dport=8080 src=172.31.254.3 dst=192.168.2.109 sport=8080 dport=38762 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 78388 ESTABLISHED src=192.168.2.175 dst=198.51.100.38 sport=38350 dport=4070 src=198.51.100.38 dst=203.0.113.176 sport=4070 dport=38350 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 tcp      6 431976 ESTABLISHED src=2001:0db8:0001:0001:f083:06b4:6a3e:dafd dst=2001:db8:ffff::4 sport=43384 dport=443 src=2001:db8:ffff::4 dst=2001:0db8:0001:0001:f083:06b4:6a3e:dafd sport=443 dport=43384 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=203.0.113.176 dst=198.51.100.19 sport=26181 dport=53 src=198.51.100.19 dst=203.0.113.176 sport=53 dport=26181 mark=0 zone=0 use=2
+ipv6     10 tcp      6 112197 ESTABLISHED src=2001:0db8:0001:0001:dc9d:7d19:0863:90ef dst=2001:db8:ffff::19 sport=63476 dport=5228 src=2001:db8:ffff::19 dst=2001:0db8:0001:0001:dc9d:7d19:0863:90ef sport=5228 dport=63476 [ASSURED] mark=0 zone=0 use=2
+ipv6     10 udp      17 14 src=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe dst=2001:db8:ffff::1a sport=45477 dport=53 src=2001:db8:ffff::1a dst=2001:0db8:00ff:0001:e49b:0f0d:46c9:01fe sport=53 dport=45477 mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=192.168.2.139 dst=192.168.2.1 sport=65219 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=65219 mark=0 zone=0 use=2
+ipv4     2 tcp      6 278024 ESTABLISHED src=192.168.2.153 dst=198.51.100.13 sport=34216 dport=443 src=198.51.100.13 dst=203.0.113.176 sport=443 dport=34216 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 44137 ESTABLISHED src=192.168.2.211 dst=198.51.100.28 sport=57147 dport=443 src=198.51.100.28 dst=203.0.113.176 sport=443 dport=57147 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 tcp      6 90 SYN_SENT src=192.168.2.170 dst=192.168.1.115 sport=48812 dport=3000 [UNREPLIED] src=192.168.1.115 dst=203.0.113.176 sport=3000 dport=48812 mark=0 zone=0 use=2
+ipv6     10 tcp      6 431970 ESTABLISHED src=2001:0db8:0001:0001:22cc:f3e4:16d4:669b dst=2001:db8:ffff::15 sport=45412 dport=5228 src=2001:db8:ffff::15 dst=2001:0db8:0001:0001:22cc:f3e4:16d4:669b sport=5228 dport=45412 [ASSURED] mark=0 zone=0 use=2
+ipv4     2 udp      17 7 src=192.168.2.139 dst=192.168.2.1 sport=58153 dport=53 src=192.168.2.1 dst=192.168.2.139 sport=53 dport=58153 mark=0 zone=0 use=2

@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+"""VyOS commit post-hook: write the dashboard's Router inventory, without secrets.
+
+Install as /config/scripts/commit/post-hooks.d/dash-inventory (mode 0755).
+VyOS runs every executable in that directory, in alphabetical order, after each
+commit: https://docs.vyos.io/en/latest/automation/command-scripting.html
+
+Output (/mnt/dash-data/inventory.json, mode 0644, replaced atomically):
+
+  {"wireguard":{"interface":"wg0","listenPort":51820,
+                "peers":[{"name":"…","publicKey":"…","allowedIps":["10.0.0.21/32"]}]},
+   "containers":[{"name":"unifi-db","addresses":["172.31.254.2"]}]}
+
+Only names, public keys, allowed IPs, the listen port and container addresses
+are copied. Private keys, preshared keys, environment values, API keys and the
+rest of the configuration are never written: the output is built from an
+allow-list, not by deleting known secrets.
+
+How it runs:
+  1. VyOS runs commit hooks WITHOUT root privileges (see the page above), as
+     the committing user. That user reads the now-active config with the
+     op-mode command `show configuration json`
+     (https://docs.vyos.io/en/latest/cli.html), which prints the running
+     config as JSON.
+  2. It then re-runs itself as root with `sudo -n` (VyOS admin users have
+     passwordless sudo), passing that JSON on stdin, because /mnt/dash-data is
+     owned by root. Only the root half writes anything.
+
+Usage:
+  dash-inventory                              # as a commit hook
+  dash-inventory --config-json FILE|- [--out PATH]   # transform only (tests)
+
+Environment:
+  DASH_WG_INTERFACE  WireGuard interface to export (default wg0)
+  DASH_INVENTORY     output path (default /mnt/dash-data/inventory.json)
+
+A post-hook runs after the commit is done, so a failure here cannot undo the
+commit; errors are printed to stderr (shown in the commit output) and the
+previous inventory.json is left in place.
+"""
+
+import json
+import os
+import subprocess
+import sys
+import tempfile
+
+OP_WRAPPER = "/opt/vyatta/bin/vyatta-op-cmd-wrapper"
+DEFAULT_OUT = "/mnt/dash-data/inventory.json"
+
+
+def as_list(value):
+    """VyOS JSON gives a multi-value node as a string when it has one value
+    and as a list when it has several (op mode and config mode also differ:
+    https://vyos.dev/T4252). Normalise to a list of strings."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(v) for v in value]
+    return [str(value)]
+
+
+def build_inventory(config, wg_interface):
+    wireguard = None
+    wg = config.get("interfaces", {}).get("wireguard", {}).get(wg_interface)
+    if isinstance(wg, dict):
+        port = wg.get("port")
+        peers = []
+        for name in sorted(wg.get("peer", {}) or {}):
+            peer = wg["peer"][name] or {}
+            peers.append(
+                {
+                    "name": name,
+                    "publicKey": peer.get("public-key"),
+                    "allowedIps": as_list(peer.get("allowed-ips")),
+                }
+            )
+        wireguard = {
+            "interface": wg_interface,
+            "listenPort": int(port) if port is not None else None,
+            "peers": peers,
+        }
+
+    containers = []
+    names = config.get("container", {}).get("name", {}) or {}
+    for name in sorted(names):
+        networks = (names[name] or {}).get("network", {}) or {}
+        addresses = []
+        for net in sorted(networks):
+            addresses.extend(as_list((networks[net] or {}).get("address")))
+        containers.append({"name": name, "addresses": addresses})
+
+    return {"wireguard": wireguard, "containers": containers}
+
+
+def write_atomic(path, data):
+    """Write data to path via a temp file in the same directory + rename, so
+    the dashboard never reads a half-written file."""
+    directory = os.path.dirname(path) or "."
+    fd, tmp = tempfile.mkstemp(prefix=".inventory.", suffix=".tmp", dir=directory)
+    try:
+        with os.fdopen(fd, "w") as f:
+            f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.chmod(tmp, 0o644)
+        os.replace(tmp, path)
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except FileNotFoundError:
+            pass
+        raise
+
+
+def read_running_config():
+    out = subprocess.run(
+        [OP_WRAPPER, "show", "configuration", "json"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return out.stdout
+
+
+def log(msg):
+    print("dash-inventory: " + msg, file=sys.stderr)
+
+
+def main(argv):
+    config_src = None
+    out = os.environ.get("DASH_INVENTORY", DEFAULT_OUT)
+    args = list(argv)
+    while args:
+        arg = args.pop(0)
+        if arg == "--config-json" and args:
+            config_src = args.pop(0)
+        elif arg == "--out" and args:
+            out = args.pop(0)
+        else:
+            log("usage: dash-inventory [--config-json FILE|-] [--out PATH]")
+            return 2
+
+    out_dir = os.path.dirname(out) or "."
+    if not os.path.isdir(out_dir):
+        log(f"{out_dir} does not exist (data partition not mounted?); not writing {out}")
+        return 0
+
+    if config_src is None:
+        # Hook mode: read as the committing user, then write as root.
+        try:
+            raw = read_running_config()
+        except (OSError, subprocess.CalledProcessError) as e:
+            log(f"cannot read running config: {e}")
+            return 1
+        if os.geteuid() != 0:
+            r = subprocess.run(
+                ["sudo", "-n", os.path.abspath(__file__), "--config-json", "-", "--out", out],
+                input=raw,
+                text=True,
+                env={"PATH": "/usr/sbin:/usr/bin:/sbin:/bin",
+                     "DASH_WG_INTERFACE": os.environ.get("DASH_WG_INTERFACE", "wg0")},
+            )
+            return r.returncode
+    elif config_src == "-":
+        raw = sys.stdin.read()
+    else:
+        with open(config_src) as f:
+            raw = f.read()
+
+    try:
+        config = json.loads(raw)
+    except ValueError as e:
+        log(f"config is not valid JSON ({e}); keeping previous {out}")
+        return 1
+    if not isinstance(config, dict):
+        log(f"config JSON is not an object; keeping previous {out}")
+        return 1
+
+    inventory = build_inventory(config, os.environ.get("DASH_WG_INTERFACE", "wg0"))
+    write_atomic(out, json.dumps(inventory, separators=(",", ":")) + "\n")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

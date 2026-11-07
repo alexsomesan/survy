@@ -1,0 +1,138 @@
+# survy: router configuration for the dashboard (spec 0001, "Router integration").
+#
+# Review, then paste into `configure` on the router and apply with
+#     commit-confirm 10
+#     (check the dashboard and your SSH session still work)
+#     confirm
+#     save
+# See docs/operations.md for the full install order. Nothing here touches
+# existing rules or interfaces except by adding to them.
+#
+# Prerequisites (see docs/operations.md, in this order):
+#   1. p5 created by deploy/partition-p5.sh and mounted at /mnt/dash-data by
+#      deploy/preconfig-mount.sh (the container's data volume needs it).
+#   2. The image loaded with `make deploy` (localhost/dash:latest exists).
+#   3. The commit hook installed, so this commit writes inventory.json.
+
+# --- Per-connection byte counters (Top Talkers) -----------------------------
+# Sets net.netfilter.nf_conntrack_acct = 1. Use this VyOS option, not
+# `system sysctl`: VyOS's conntrack script owns that sysctl and writes 0 on
+# every firewall or conntrack commit unless flow-accounting is set (seen on
+# VyOS rolling 2026.09.28).
+# Top Talkers also depends on the existing `counter` flag on flowtable FT01
+# (ADR 0002). Do not remove it, or offloaded traffic is undercounted.
+set system conntrack flow-accounting
+
+# --- Address and name -------------------------------------------------------
+# A third address on br0 (it already has .1 and .3), used only by the dashboard.
+set interfaces bridge br0 address '192.168.2.4/24'
+# survy.home.arpa, with the first name, dash, kept as an alias.
+set system static-host-mapping host-name survy.home.arpa inet '192.168.2.4'
+set system static-host-mapping host-name survy.home.arpa alias 'dash.home.arpa'
+
+# --- Firewall: TCP 80 to the dashboard addresses from br0 and wg0 only -------
+# Rule numbers 900-902 are a guess: the existing input rule numbers are not
+# known here. Before applying, run `show firewall ipv4 input filter` and make
+# sure these three come BEFORE any rule that would accept or drop this traffic
+# first (renumber them if needed). Rule 902 drops port 80 to these addresses
+# from every other interface, whatever the chain's default-action is.
+# https://docs.vyos.io/en/latest/configuration/firewall/ipv4.html
+set firewall group address-group DASH-ADDRS address '192.168.2.4'
+set firewall group address-group DASH-ADDRS address '10.0.0.1'
+set firewall group address-group DASH-ADDRS description 'vyos-dash listen addresses'
+
+set firewall ipv4 input filter rule 900 action 'accept'
+set firewall ipv4 input filter rule 900 description 'vyos-dash: HTTP from LAN (br0)'
+set firewall ipv4 input filter rule 900 inbound-interface name 'br0'
+set firewall ipv4 input filter rule 900 protocol 'tcp'
+set firewall ipv4 input filter rule 900 destination port '80'
+set firewall ipv4 input filter rule 900 destination group address-group 'DASH-ADDRS'
+
+set firewall ipv4 input filter rule 901 action 'accept'
+set firewall ipv4 input filter rule 901 description 'vyos-dash: HTTP from WireGuard (wg0)'
+set firewall ipv4 input filter rule 901 inbound-interface name 'wg0'
+set firewall ipv4 input filter rule 901 protocol 'tcp'
+set firewall ipv4 input filter rule 901 destination port '80'
+set firewall ipv4 input filter rule 901 destination group address-group 'DASH-ADDRS'
+
+set firewall ipv4 input filter rule 902 action 'drop'
+set firewall ipv4 input filter rule 902 description 'vyos-dash: HTTP from anywhere else'
+set firewall ipv4 input filter rule 902 protocol 'tcp'
+set firewall ipv4 input filter rule 902 destination port '80'
+set firewall ipv4 input filter rule 902 destination group address-group 'DASH-ADDRS'
+
+# --- Monthly refresh of the IP-to-organisation database -----------------------
+# Runs as root on the 3rd of each month at 04:17 (a quiet, non-round time).
+# https://docs.vyos.io/en/latest/configuration/system/task-scheduler.html
+set system task-scheduler task dash-fetch-asn crontab-spec '17 4 3 * *'
+set system task-scheduler task dash-fetch-asn executable path '/config/scripts/dash/fetch-asn.sh'
+
+# --- The container ------------------------------------------------------------
+# Options: https://docs.vyos.io/en/latest/configuration/container/index.html
+set container name dash image 'localhost/dash:latest'
+set container name dash restart 'always'
+
+# Host networking (podman --net host): the dashboard must see the host's
+# conntrack and neighbour tables and listen on 192.168.2.4 and 10.0.0.1.
+# It binds only those two addresses (DASH_LISTEN below). Cannot be combined
+# with `network`.
+set container name dash allow-host-networks
+
+# Hard limits: cpu-quota is a number of CPUs (podman --cpus), so 0.1 = 10% of
+# one core. Memory is in MB. Lowest CPU and I/O priority is set by the image
+# itself (ENTRYPOINT runs `nice -n 19 ionice -c 3`), because VyOS has no
+# container option for it; lowering your own priority needs no capability.
+set container name dash cpu-quota '0.1'
+set container name dash memory '512'
+
+# Only CAP_NET_ADMIN is added, for reading conntrack (incl. destroy events) and
+# the neighbour tables over netlink. Podman's default capability set applies
+# otherwise; the dashboard needs these from it, only during startup:
+#   net-bind-service  listen on port 80
+#   chown             give /data to the unprivileged user
+#   setuid, setgid    drop to that user
+# The container runs as host root (no user namespace). At startup, while
+# still root, the dashboard opens its conntrack sockets and :80 listeners,
+# chowns /data, and then drops to uid/gid 65534 (keeping only the Kea lease
+# file's group), keeping only CAP_NET_ADMIN, with no_new_privs. CAP_NET_ADMIN
+# must stay: the kernel checks it on conntrack netlink requests against the
+# current process as well as the socket opener (ADR 0005). It then verifies
+# that /host/proc/1/root cannot be opened and exits if it can. See
+# docs/operations.md, "Privileges".
+set container name dash capability 'net-admin'
+
+set container name dash environment DASH_LISTEN value '192.168.2.4:80,10.0.0.1:80'
+set container name dash environment DASH_ROOT value '/host'
+set container name dash environment DASH_DATA value '/data'
+set container name dash environment DASH_DATA_HOST_PATH value '/mnt/dash-data'
+# Who the dashboard becomes after startup (both default to 65534, nobody).
+set container name dash environment DASH_UID value '65534'
+set container name dash environment DASH_GID value '65534'
+
+# Read-write: only the data partition.
+set container name dash volume data source '/mnt/dash-data'
+set container name dash volume data destination '/data'
+set container name dash volume data mode 'rw'
+
+# Read-only host views, all under DASH_ROOT=/host:
+#   /proc        CPU, memory, load, uptime, per-process stats
+#   /sys         interface counters, hwmon temperatures, cgroup statistics
+#   /config/dhcp Kea DHCP lease CSV (device names)
+#   /boot        only to statfs the system partition (p3, which holds just
+#                kernels under /boot); nothing in it is read
+# /run is deliberately NOT mounted: it holds the podman API socket, and a
+# read-only bind mount does not stop connect() on a unix socket, so mounting it
+# would hand the container root on the host.
+# WAN uptime therefore comes from finding `pppd call pppoe0` in /host/proc.
+set container name dash volume proc source '/proc'
+set container name dash volume proc destination '/host/proc'
+set container name dash volume proc mode 'ro'
+set container name dash volume sys source '/sys'
+set container name dash volume sys destination '/host/sys'
+set container name dash volume sys mode 'ro'
+set container name dash volume dhcp source '/config/dhcp'
+set container name dash volume dhcp destination '/host/config/dhcp'
+set container name dash volume dhcp mode 'ro'
+set container name dash volume boot source '/boot'
+set container name dash volume boot destination '/host/boot'
+set container name dash volume boot mode 'ro'

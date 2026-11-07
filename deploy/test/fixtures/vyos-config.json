@@ -1,0 +1,94 @@
+{
+  "container": {
+    "name": {
+      "airprint": {
+        "allow-host-networks": {},
+        "image": "localhost/airprint-ml2165w:latest",
+        "memory": "512",
+        "restart": "always"
+      },
+      "unifi-db": {
+        "image": "docker.io/library/mongo:7",
+        "network": {
+          "unifi": {
+            "address": "172.31.254.2"
+          }
+        },
+        "environment": {
+          "MONGO_INITDB_ROOT_PASSWORD": {
+            "value": "FAKE-NOT-A-SECRET-db-password"
+          }
+        }
+      },
+      "unifi": {
+        "image": "lscr.io/linuxserver/unifi-network-application:latest",
+        "network": {
+          "unifi": {
+            "address": [
+              "172.31.254.3",
+              "fd00:31:254::3"
+            ]
+          }
+        }
+      }
+    },
+    "network": {
+      "unifi": {
+        "prefix": "172.31.254.0/24"
+      }
+    }
+  },
+  "interfaces": {
+    "ethernet": {
+      "eth0": {
+        "hw-id": "00:00:00:cc:9d:1c"
+      }
+    },
+    "wireguard": {
+      "wg0": {
+        "address": "10.0.0.1/24",
+        "port": "51820",
+        "private-key": "FAKE-NOT-A-SECRET-private-key-AAAAAAAAAAAAAAAAAAAA=",
+        "peer": {
+          "laptop": {
+            "allowed-ips": "10.0.0.21/32",
+            "public-key": "FAKEpubLaptopAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+            "preshared-key": "FAKE-NOT-A-SECRET-psk-laptop-AAAAAAAAAAAAAAA=",
+            "persistent-keepalive": "25"
+          },
+          "phone": {
+            "allowed-ips": [
+              "10.0.0.22/32",
+              "fd00:10::22/128"
+            ],
+            "public-key": "FAKEpubPhoneAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          }
+        }
+      },
+      "wg9": {
+        "address": "10.9.0.1/24",
+        "port": "51999",
+        "private-key": "FAKE-NOT-A-SECRET-private-key-wg9-AAAAAAAAAAAAAAAA=",
+        "peer": {
+          "other": {
+            "allowed-ips": "10.9.0.2/32",
+            "public-key": "FAKEpubOtherAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          }
+        }
+      }
+    }
+  },
+  "service": {
+    "https": {
+      "api": {
+        "keys": {
+          "id": {
+            "admin": {
+              "key": "FAKE-NOT-A-SECRET-api-key"
+            }
+          }
+        }
+      }
+    }
+  }
+}

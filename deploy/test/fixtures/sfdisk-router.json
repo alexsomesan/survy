@@ -1,0 +1,39 @@
+{
+   "partitiontable": {
+      "label": "gpt",
+      "id": "00000000-0000-4000-8000-000000000000",
+      "device": "/dev/nvme0n1",
+      "unit": "sectors",
+      "firstlba": 34,
+      "lastlba": 500118158,
+      "sectorsize": 512,
+      "partitions": [
+         {
+            "node": "/dev/nvme0n1p1",
+            "start": 2048,
+            "size": 2048,
+            "type": "21686148-6449-6E6F-744E-656564454649",
+            "uuid": "00000000-0000-4000-8000-000000000001"
+         },{
+            "node": "/dev/nvme0n1p2",
+            "start": 4096,
+            "size": 524288,
+            "type": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "uuid": "00000000-0000-4000-8000-000000000002"
+         },{
+            "node": "/dev/nvme0n1p3",
+            "start": 528384,
+            "size": 10485760,
+            "type": "0FC63DAF-8483-4772-8E79-3D69D8477DE4",
+            "uuid": "00000000-0000-4000-8000-000000000003"
+         },{
+            "node": "/dev/nvme0n1p4",
+            "start": 11014144,
+            "size": 209715200,
+            "type": "0FC63DAF-8483-4772-8E79-3D69D8477DE4",
+            "uuid": "00000000-0000-4000-8000-000000000004",
+            "name": "vyos-containers"
+         }
+      ]
+   }
+}
