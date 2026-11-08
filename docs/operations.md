@@ -22,8 +22,9 @@ free after p4.
 | ASN database | `deploy/fetch-asn.sh` | `/config/scripts/dash/fetch-asn.sh` → `/mnt/dash-data/ip2asn-combined.tsv.gz`, monthly |
 
 Data files in `/mnt/dash-data` (the container's `/data`): the History
-database, `inventory.json`, `aliases.json` (yours to edit) and
-`ip2asn-combined.tsv.gz`.
+database, `inventory.json`, `aliases.json` (yours to edit),
+`ip2asn-combined.tsv.gz` and, for HTTPS, `tls/fullchain.pem` and
+`tls/privkey.pem` (see "HTTPS").
 
 ## First install
 
@@ -137,7 +138,7 @@ ps -o pid,ni,comm -C survy                         # NI 19
 sudo ionice -p "$(pgrep -x survy)"                  # idle
 sudo ss -ltnp | grep ':80 '                        # only 192.168.2.4:80 and 10.0.0.1:80
 sysctl net.netfilter.nf_conntrack_acct             # = 1
-show firewall ipv4 input filter                    # rules 900-902 have packet counts
+show firewall ipv4 input filter                    # rules 900-902 (and 903-905 with HTTPS) have packet counts
 ```
 
 From outside (the WAN, a mobile network), `http://<WAN address>/` must not
@@ -151,7 +152,8 @@ reach the whole host filesystem, including `/config/config.boot`. The binary
 closes this itself, independent of podman options:
 
 1. While root, it opens everything that needs privileges: the conntrack
-   netlink sockets (dump and destroy-event listener) and the :80 listeners.
+   netlink sockets (dump and destroy-event listener) and the :80 and :443
+   listeners.
 2. It chowns `/data` to `DASH_UID:DASH_GID` (default 65534) and reads the
    group of the Kea lease file (`0640`, gid 102 on the router).
 3. It drops every capability except `CAP_NET_ADMIN` from its bounding set,
@@ -170,8 +172,8 @@ not permitted". If a conntrack dump fails, the error is logged and Top
 Talkers stay empty until a restart.
 
 Capabilities needed: `net-admin` (added in `deploy/vyos.commands`), plus
-podman's defaults `chown`, `setuid`, `setgid` and `net-bind-service`, used
-only before the drop. `DASH_DROP_PRIVS=0` skips the drop for local
+podman's defaults `chown`, `setuid`, `setgid` and `net-bind-service` (ports 80
+and 443), used only before the drop. `DASH_DROP_PRIVS=0` skips the drop for local
 development; started as a non-root user the dashboard skips it by itself and
 logs so.
 
@@ -185,6 +187,74 @@ ps -o user,group,comm -C survy         # 65534 65534 survy
 grep -E 'Cap(Eff|Prm|Bnd)|NoNewPrivs' /proc/$(pgrep -x survy)/status
 #   CapPrm/CapEff/CapBnd 0000000000001000 (CAP_NET_ADMIN only), NoNewPrivs 1
 ```
+
+## HTTPS
+
+survy serves HTTPS itself, next to plain HTTP on port 80, when
+`DASH_TLS_LISTEN` is set. It is off by default. It reads a certificate chain
+and key from the data partition and needs no restart when they are renewed.
+
+| Setting | Meaning |
+|---|---|
+| `DASH_TLS_LISTEN` | comma-separated addresses, normally `192.168.2.4:443,10.0.0.1:443`; unset means HTTPS is off |
+| `DASH_TLS_CERT` | PEM certificate chain, leaf first; default `/data/tls/fullchain.pem` |
+| `DASH_TLS_KEY` | PEM private key (PKCS#8 or PKCS#1 RSA or EC); default `/data/tls/privkey.pem` |
+
+On the router the files are `/mnt/dash-data/tls/fullchain.pem` and
+`/mnt/dash-data/tls/privkey.pem`.
+
+**Who writes the files.** Whatever issues the certificate (an ACME client and a
+deploy script, run as root) installs the two files and **must make them
+readable by the dashboard's user**, because the dashboard runs as uid 65534
+after its startup. At startup it chowns `/data` recursively, but a file
+written later by root is not covered:
+
+```sh
+sudo install -d -o 65534 -g 65534 -m 0700 /mnt/dash-data/tls
+sudo install -o 65534 -g 65534 -m 0644 fullchain.pem /mnt/dash-data/tls/fullchain.pem
+sudo install -o 65534 -g 65534 -m 0600 privkey.pem  /mnt/dash-data/tls/privkey.pem
+```
+
+**What it does with them.**
+- Checks the two files on every handshake (two `stat` calls) and parses them
+  again only when their size or modification time changed. A renewal is
+  served from the next connection on.
+- Rejects a half-written pair, such as a new certificate whose key has not
+  landed yet, and keeps serving the previous certificate. The log says so
+  once: `tls: cannot load the new certificate, still serving the previous one`.
+- Starts even when the files do not exist yet, so a boot-time ordering race
+  with the deploy script does no harm. Handshakes fail until they appear, and
+  the log says `tls: no certificate to serve yet`.
+- Offers TLS 1.2 and later, with HTTP/2. The live stream (`/api/live`) works
+  over it.
+
+**Names.** The page must be opened under a name the certificate covers. A
+wildcard such as `*.home.somesan.de` covers `survy.home.somesan.de`, which
+needs a `system static-host-mapping` to `192.168.2.4` like `survy.home.arpa`
+has. It does not cover `survy.home.arpa`, so browsers will reject that name
+over HTTPS.
+
+**Apply.** `deploy/vyos.commands` has the optional firewall rules 903–905 for
+port 443 and the `DASH_TLS_LISTEN` variable. Apply them as in "Apply the
+configuration" (check the rule numbers first), then restart the container
+once: the listeners are opened at startup.
+
+**Verify.**
+
+```sh
+sudo podman logs dash | grep -E 'tls:|serving'
+#   tls: certificate "*.home.somesan.de" [*.home.somesan.de] valid until <date>
+#   serving https on 192.168.2.4:443
+sudo ss -ltnp | grep ':443 '                      # only 192.168.2.4:443 and 10.0.0.1:443
+curl -sI https://survy.home.somesan.de/           # 200, certificate trusted
+echo | openssl s_client -connect 192.168.2.4:443 -servername survy.home.somesan.de 2>/dev/null | openssl x509 -noout -dates -subject
+```
+
+After a renewal, the same `openssl` command shows the new dates without a
+restart.
+
+**Not covered.** There is no redirect from port 80 to port 443: both stay
+up. Client certificates are not supported.
 
 ## Updating
 
@@ -240,6 +310,9 @@ delete system task-scheduler task dash-fetch-asn
 delete firewall ipv4 input filter rule 900
 delete firewall ipv4 input filter rule 901
 delete firewall ipv4 input filter rule 902
+delete firewall ipv4 input filter rule 903   # only if HTTPS rules were applied
+delete firewall ipv4 input filter rule 904
+delete firewall ipv4 input filter rule 905
 delete firewall group address-group DASH-ADDRS
 delete system static-host-mapping host-name survy.home.arpa
 delete interfaces bridge br0 address 192.168.2.4/24

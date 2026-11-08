@@ -61,6 +61,32 @@ set firewall ipv4 input filter rule 902 protocol 'tcp'
 set firewall ipv4 input filter rule 902 destination port '80'
 set firewall ipv4 input filter rule 902 destination group address-group 'DASH-ADDRS'
 
+# --- Optional: HTTPS (TCP 443), see docs/operations.md, "HTTPS" ---------------
+# Same shape as rules 900-902 for port 443. Apply together with the
+# DASH_TLS_LISTEN variable in the container section below; without that
+# variable nothing listens on 443 and these rules do no harm. The same
+# ordering rule applies: they must come before anything that accepts or drops
+# this traffic first.
+set firewall ipv4 input filter rule 903 action 'accept'
+set firewall ipv4 input filter rule 903 description 'vyos-dash: HTTPS from LAN (br0)'
+set firewall ipv4 input filter rule 903 inbound-interface name 'br0'
+set firewall ipv4 input filter rule 903 protocol 'tcp'
+set firewall ipv4 input filter rule 903 destination port '443'
+set firewall ipv4 input filter rule 903 destination group address-group 'DASH-ADDRS'
+
+set firewall ipv4 input filter rule 904 action 'accept'
+set firewall ipv4 input filter rule 904 description 'vyos-dash: HTTPS from WireGuard (wg0)'
+set firewall ipv4 input filter rule 904 inbound-interface name 'wg0'
+set firewall ipv4 input filter rule 904 protocol 'tcp'
+set firewall ipv4 input filter rule 904 destination port '443'
+set firewall ipv4 input filter rule 904 destination group address-group 'DASH-ADDRS'
+
+set firewall ipv4 input filter rule 905 action 'drop'
+set firewall ipv4 input filter rule 905 description 'vyos-dash: HTTPS from anywhere else'
+set firewall ipv4 input filter rule 905 protocol 'tcp'
+set firewall ipv4 input filter rule 905 destination port '443'
+set firewall ipv4 input filter rule 905 destination group address-group 'DASH-ADDRS'
+
 # --- Monthly refresh of the IP-to-organisation database -----------------------
 # Runs as root on the 3rd of each month at 04:17 (a quiet, non-round time).
 # https://docs.vyos.io/en/latest/configuration/system/task-scheduler.html
@@ -88,11 +114,11 @@ set container name dash memory '512'
 # Only CAP_NET_ADMIN is added, for reading conntrack (incl. destroy events) and
 # the neighbour tables over netlink. Podman's default capability set applies
 # otherwise; the dashboard needs these from it, only during startup:
-#   net-bind-service  listen on port 80
+#   net-bind-service  listen on ports 80 and 443
 #   chown             give /data to the unprivileged user
 #   setuid, setgid    drop to that user
 # The container runs as host root (no user namespace). At startup, while
-# still root, the dashboard opens its conntrack sockets and :80 listeners,
+# still root, the dashboard opens its conntrack sockets and :80 (and :443) listeners,
 # chowns /data, and then drops to uid/gid 65534 (keeping only the Kea lease
 # file's group), keeping only CAP_NET_ADMIN, with no_new_privs. CAP_NET_ADMIN
 # must stay: the kernel checks it on conntrack netlink requests against the
@@ -102,6 +128,10 @@ set container name dash memory '512'
 set container name dash capability 'net-admin'
 
 set container name dash environment DASH_LISTEN value '192.168.2.4:80,10.0.0.1:80'
+# Optional HTTPS (see docs/operations.md, "HTTPS"). The certificate and key are
+# read from /data/tls/fullchain.pem and /data/tls/privkey.pem (override with
+# DASH_TLS_CERT and DASH_TLS_KEY) and re-read when they change.
+set container name dash environment DASH_TLS_LISTEN value '192.168.2.4:443,10.0.0.1:443'
 set container name dash environment DASH_ROOT value '/host'
 set container name dash environment DASH_DATA value '/data'
 set container name dash environment DASH_DATA_HOST_PATH value '/mnt/dash-data'
