@@ -34,6 +34,7 @@ There is no login and no HTTPS: survy is meant for a trusted home or office LAN,
 - [docs/api.md](docs/api.md): the JSON API the page uses
 - [docs/adr/](docs/adr/README.md): the main design decisions and why
 - [GLOSSARY.md](GLOSSARY.md): the terms used throughout
+- [tools/macos-menubar](tools/macos-menubar/README.md): optional macOS menu bar icon that opens the dashboard
 
 ## Data sources
 
