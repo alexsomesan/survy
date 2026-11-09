@@ -34,7 +34,7 @@ survy is one static Go binary (`cmd/survy`) in a podman container on the router,
 
 ## Lifecycle (`cmd/survy`)
 
-1. **As root:** open the conntrack sockets (`adapters.Kernel.Open`, not part of `ports.Kernel`) and the :80 listeners, chown the data directory, and read the Kea lease file's group.
+1. **As root:** open the conntrack sockets (`adapters.Kernel.Open`, not part of `ports.Kernel`) and the :80 and (when `DASH_TLS_LISTEN` is set) :443 listeners, chown the data directory, and read the Kea lease file's group.
 2. **Drop privileges** (`internal/privdrop`, [ADR 0005](adr/0005-in-process-privilege-drop-keeping-net-admin.md)): become uid 65534 keeping only `CAP_NET_ADMIN`, then self-check that `/host/proc/1/root` is unreachable. Any failure exits.
 3. **`app.New`, then `Start`:** take a baseline reading, open History, start the labeller, and schedule `tickSecond` (1 s), `hist.maintain` (hourly expiry and guard cap) and the ASN file check.
 4. **Shutdown:** stop the HTTP server first, then `app.Close`. `Close` stops the ticks (the real clock waits for an in-flight tick), flushes Device History and closes the store. Keep this order: the reverse closes the store under a running request.
@@ -71,6 +71,7 @@ The Live View is the last 60 one-second samples, held in memory only.
 | `internal/oui` | embedded IEEE MA-L table (regenerate with `gen/`) | refreshing manufacturer names |
 | `internal/ports` | the interfaces to the outside world: `Kernel`, `Clock`, `Resolver` | a new non-file input |
 | `internal/adapters` | real `Kernel` (netlink via ti-mo/conntrack and vishvananda/netlink), `Clock`, `Resolver` | kernel or DNS plumbing; check with `cmd/dash-probe` on the router |
+| `internal/tlscert` | the HTTPS certificate: two PEM files re-read when they change, last good pair kept on a bad write | the certificate source or reload rules change |
 | `internal/privdrop` | the privilege drop | only with a router re-check (ADR 0005) |
 | `internal/testkit` | the test seam: harness, fakes, fixtures recorded from the router | a test needs a new knob |
 | `cmd/survy-probe` | prints one reading of each real adapter as JSON | smoke-checking adapters on the router |
