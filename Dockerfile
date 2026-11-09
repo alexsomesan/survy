@@ -25,7 +25,10 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 # has no container option for scheduling priority, so the entrypoint drops to
 # the lowest CPU (nice 19) and I/O (idle class) priority before exec'ing survy,
 # which ends up as PID 1. Lowering one's own priority needs no capability.
-FROM busybox:1.37-musl
+# Pinned to amd64 (the router's architecture): the Go stage already cross-compiles,
+# and without this an arm64 build host would pull an arm64 busybox whose nice and
+# ionice cannot run on the router.
+FROM --platform=linux/amd64 busybox:1.37-musl
 COPY --from=go /out/survy /usr/local/bin/survy
 ENV DASH_LISTEN=192.168.2.4:80,10.0.0.1:80 \
     DASH_ROOT=/host \
