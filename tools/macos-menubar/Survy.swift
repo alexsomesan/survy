@@ -1,7 +1,7 @@
 import Cocoa
 import WebKit
 
-let url = URL(string: ProcessInfo.processInfo.environment["SURVY_URL"] ?? "https://survy.home.somesan.de/")!
+let url = URL(string: ProcessInfo.processInfo.environment["SURVY_URL"] ?? "https://survy.example.com/")!
 
 private struct MenuBarConfig: Decodable {
     let unifiURL: String

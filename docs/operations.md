@@ -228,11 +228,11 @@ sudo install -o 65534 -g 65534 -m 0600 privkey.pem  /mnt/dash-data/tls/privkey.p
 - Offers TLS 1.2 and later, with HTTP/2. The live stream (`/api/live`) works
   over it.
 
-**Names.** The page must be opened under a name the certificate covers. A
-wildcard such as `*.home.somesan.de` covers `survy.home.somesan.de`, which
-needs a `system static-host-mapping` to `192.168.2.4` like `survy.home.arpa`
-has. It does not cover `survy.home.arpa`, so browsers will reject that name
-over HTTPS.
+**Names.** The page must be opened under a name the certificate covers. For
+example, `*.example.com` covers `survy.example.com` but not `survy.home.arpa`.
+Substitute your certificate-covered hostname for `survy.example.com` in the
+commands below. Give that hostname a `system static-host-mapping` to
+`192.168.2.4` like `survy.home.arpa` has.
 
 **Apply.** `deploy/vyos.commands` has the optional firewall rules 903–905 for
 port 443 and the `DASH_TLS_LISTEN` variable. Apply them as in "Apply the
@@ -243,11 +243,11 @@ once: the listeners are opened at startup.
 
 ```sh
 sudo podman logs dash | grep -E 'tls:|serving'
-#   tls: certificate "*.home.somesan.de" [*.home.somesan.de] valid until <date>
+#   tls: certificate "*.example.com" [*.example.com] valid until <date>
 #   serving https on 192.168.2.4:443
 sudo ss -ltnp | grep ':443 '                      # only 192.168.2.4:443 and 10.0.0.1:443
-curl -sI https://survy.home.somesan.de/           # 200, certificate trusted
-echo | openssl s_client -connect 192.168.2.4:443 -servername survy.home.somesan.de 2>/dev/null | openssl x509 -noout -dates -subject
+curl -sI https://survy.example.com/              # 200, certificate trusted
+echo | openssl s_client -connect 192.168.2.4:443 -servername survy.example.com 2>/dev/null | openssl x509 -noout -dates -subject
 ```
 
 After a renewal, the same `openssl` command shows the new dates without a

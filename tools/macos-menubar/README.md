@@ -17,7 +17,7 @@ Needs the Xcode command line tools (`swiftc`).
 open ~/Applications/Survy.app
 ```
 
-The dashboard address defaults to the owner's (`https://survy.home.somesan.de/`) and is the `url` constant at the top of `Survy.swift`. Edit it, or set `SURVY_URL` in the app's environment, to point elsewhere.
+The default dashboard address, `https://survy.example.com/`, is a placeholder. Set `SURVY_URL` in the app's environment to your dashboard URL, or edit the `url` constant at the top of `Survy.swift` before building.
 
 Quit the app before rebuilding. To remove start at login:
 
