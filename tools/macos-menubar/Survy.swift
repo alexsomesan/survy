@@ -18,8 +18,6 @@ private struct MenuBarConfig: Decodable {
                 return nil
             }
             return url
-        } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
-            return URL(string: "https://unifi-ctrl.home.somesan.de:8443/")!
         } catch {
             NSLog("Survy: could not load %@: %@", file.path, String(describing: error))
             return nil

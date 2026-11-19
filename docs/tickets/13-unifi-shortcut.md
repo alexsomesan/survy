@@ -12,8 +12,8 @@ Add a browser shortcut to the macOS status icon's existing right-click menu and 
 
 Smoke-check on macOS:
 
-- With no config file, **Open UniFi Network** opens the default URL in the default browser.
-- With a different absolute HTTP(S) URL in the config, relaunching the app makes the shortcut open that URL, including its port and path.
+- With no config file, **Open UniFi Network** is disabled and Survy logs why; there is no default URL.
+- With an absolute HTTP(S) URL in the config, relaunching the app makes the shortcut open that URL in the default browser, including its port and path.
 - Malformed JSON or an invalid URL disables the shortcut and logs why. Left-click still opens the Survy dashboard and Quit Survy still works.
 
 ## Results

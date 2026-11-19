@@ -30,12 +30,12 @@ The app is ad-hoc signed and is meant for the machine that built it. Like survy 
 
 ### UniFi Network shortcut
 
-**Open UniFi Network** defaults to `https://unifi-ctrl.home.somesan.de:8443/`. To use another address, create `~/Library/Application Support/Survy/config.json` (create the `Survy` directory if needed):
+**Open UniFi Network** only uses the URL in `~/Library/Application Support/Survy/config.json`; there is no default. Create the `Survy` directory if needed, then create the file:
 
 ```json
 {
-  "unifiURL": "https://unifi.example.com:8443/"
+  "unifiURL": "https://unifi-ctrl.home.somesan.de:8443/"
 }
 ```
 
-Use an absolute `http://` or `https://` URL. Quit and reopen Survy to apply changes; no rebuild is needed. If the file exists but cannot be read or contains an invalid setting, the shortcut is disabled and Survy logs the error.
+Use an absolute `http://` or `https://` URL. Quit and reopen Survy to apply changes; no rebuild is needed. If the file is missing, cannot be read or contains an invalid setting, the shortcut is disabled and Survy logs the error.
