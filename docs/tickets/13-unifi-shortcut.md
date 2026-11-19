@@ -19,4 +19,28 @@ Smoke-check on macOS:
 
 ## Results
 
-`make test` passed on Linux. The macOS build and menu smoke check are still unverified.
+`make test` passed on Linux (reported by the prior verification; not rerun here).
+
+macOS verification on 2026-11-19:
+
+- `git fetch origin` succeeded. The isolated worktree and
+  `origin/alexsomesan-supreme-adventure` both pointed to
+  `4f9ac3a51429c13d18a6e31a23d2d9167d77d620`; the primary checkout was not used.
+- `tools/macos-menubar/build.sh` without `--login` succeeded on macOS 27.2.1
+  (arm64), using Apple Swift 6.4. The first build ran while Survy was running;
+  after the user confirmed quitting, a process check confirmed it was stopped
+  and the build was repeated successfully. No Swift fixes were needed.
+- The existing per-user config file was present and was not changed. After the
+  user opened the app and left-clicked its icon, Computer Use observed the
+  dashboard loaded inside Survy. Sending Cmd-R visibly reset the dashboard to
+  its initial Connecting state, confirming dashboard reload.
+- The user reported that right-click > Open UniFi Network opened a separate
+  UniFi window and left the dashboard intact. This was not independently
+  confirmed: Computer Use continued to expose only the dashboard window.
+- Reopening either window, independent saved frames, Cmd-R in the UniFi window,
+  and disabled-menu/logging behavior for missing config, malformed JSON or an
+  invalid URL remain unverified. Computer Use could not bind Survy while it
+  exposed only its menu-bar icon, and its status menu was not available in the
+  bound dashboard's accessibility tree.
+
+The ticket remains open pending the remaining macOS acceptance smoke checks.
