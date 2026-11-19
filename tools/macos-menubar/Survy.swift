@@ -3,7 +3,30 @@ import WebKit
 
 let url = URL(string: ProcessInfo.processInfo.environment["SURVY_URL"] ?? "https://survy.home.somesan.de/")!
 
+private struct MenuBarConfig: Decodable {
+    let unifiURL: String
+
+    static func loadUniFiURL() -> URL? {
+        let file = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Application Support/Survy/config.json")
+        do {
+            let config = try JSONDecoder().decode(Self.self, from: Data(contentsOf: file))
+            guard let url = URL(string: config.unifiURL),
+                  let scheme = url.scheme?.lowercased(), scheme == "http" || scheme == "https",
+                  let host = url.host, !host.isEmpty else {
+                NSLog("Survy: unifiURL in %@ must be an absolute HTTP or HTTPS URL.", file.path)
+                return nil
+            }
+            return url
+        } catch {
+            NSLog("Survy: could not load %@: %@", file.path, String(describing: error))
+            return nil
+        }
+    }
+}
+
 class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
+    private let unifiURL = MenuBarConfig.loadUniFiURL()
     var item: NSStatusItem!
     var window: NSWindow?
     var webView: WKWebView!
@@ -48,6 +71,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
 
     @objc func reload() { webView?.reload() }
 
+    @objc func openUniFi() {
+        guard let unifiURL = unifiURL else { return }
+        if !NSWorkspace.shared.open(unifiURL) {
+            let alert = NSAlert()
+            alert.messageText = "Could not open UniFi Network"
+            alert.informativeText = "macOS could not open the configured URL in your default browser."
+            alert.runModal()
+        }
+    }
+
     func showWindow() {
         if window == nil {
             let cfg = WKWebViewConfiguration()
@@ -82,6 +115,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
     @objc func clicked(_ sender: NSStatusBarButton) {
         if NSApp.currentEvent?.type == .rightMouseUp {
             let m = NSMenu()
+            let openUniFiItem = m.addItem(withTitle: "Open UniFi Network",
+                                         action: unifiURL == nil ? nil : #selector(openUniFi),
+                                         keyEquivalent: "")
+            openUniFiItem.target = self
+            m.addItem(.separator())
             m.addItem(withTitle: "Quit Survy", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
             item.menu = m
             item.button?.performClick(nil)
