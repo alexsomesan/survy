@@ -45,8 +45,11 @@ macOS verification on 2026-11-19:
   Encrypt wildcard certificate and returned HTTP 200 with certificate
   validation enabled. Thus the blank-window check did not establish a
   successful UniFi page load. The config was left unchanged; removing the
-  explicit port 8443 and relaunching remains an owner action before retesting.
+  explicit port 8443 and relaunching was the recommended owner action.
   No certificate bypass or app behavior change was introduced.
+- Following the certificate/port diagnosis, the owner confirmed the shortcut
+  working on 2026-11-19. This confirms the UniFi opening flow; it does not
+  establish that every remaining acceptance check below was exercised.
 - Reopening either window, independent saved frames, Cmd-R in the UniFi window,
   and disabled-menu/logging behavior for missing config, malformed JSON or an
   invalid URL remain unverified. Computer Use could not bind Survy while it
