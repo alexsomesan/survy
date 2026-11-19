@@ -34,7 +34,7 @@ The app is ad-hoc signed and is meant for the machine that built it. Like survy 
 
 ```json
 {
-  "unifiURL": "https://unifi-ctrl.home.somesan.de:8443/"
+  "unifiURL": "https://unifi.example.com:8443/"
 }
 ```
 
