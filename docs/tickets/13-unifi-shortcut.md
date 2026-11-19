@@ -35,8 +35,18 @@ macOS verification on 2026-11-19:
   dashboard loaded inside Survy. Sending Cmd-R visibly reset the dashboard to
   its initial Connecting state, confirming dashboard reload.
 - The user reported that right-click > Open UniFi Network opened a separate
-  UniFi window and left the dashboard intact. This was not independently
-  confirmed: Computer Use continued to expose only the dashboard window.
+  UniFi window and left the dashboard intact. Initially Computer Use exposed
+  only the dashboard window. On follow-up after the user reported a blank
+  window, Computer Use observed two Survy windows; the second had no web
+  content, and WebKit logged a main-frame certificate failure (`-1202`).
+- The configured UniFi endpoint used HTTPS port 8443, which served a
+  self-signed certificate with subject `CN=UniFi` and SAN `DNS:UniFi`, not the
+  configured hostname. The same hostname on port 443 served a valid Let's
+  Encrypt wildcard certificate and returned HTTP 200 with certificate
+  validation enabled. Thus the blank-window check did not establish a
+  successful UniFi page load. The config was left unchanged; removing the
+  explicit port 8443 and relaunching remains an owner action before retesting.
+  No certificate bypass or app behavior change was introduced.
 - Reopening either window, independent saved frames, Cmd-R in the UniFi window,
   and disabled-menu/logging behavior for missing config, malformed JSON or an
   invalid URL remain unverified. Computer Use could not bind Survy while it
