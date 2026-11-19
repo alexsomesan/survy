@@ -1,4 +1,4 @@
-# Tickets for specs 0001 and 0002
+# Tickets
 
 There's no issue tracker, so tickets live here. A ticket is **closed** when its `Status:` line reads `closed` and its work is merged into `integration/spec-0001`.
 
@@ -16,6 +16,7 @@ There's no issue tracker, so tickets live here. A ticket is **closed** when its 
 | 11 | [Review fixes](11-review-fixes.md) | 01–09 | closed |
 | 10 | [End-to-end verification](10-verification.md) | 02–09, 11 | closed |
 | 12 | [HTTPS listener](12-tls.md) (spec 0002) | none | closed |
+| 13 | [UniFi Network shortcut](13-unifi-shortcut.md) (spec 0003) | none | open |
 
 ## Conventions
 
