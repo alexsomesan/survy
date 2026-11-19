@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
     private let unifiURL = MenuBarConfig.loadUniFiURL()
     var item: NSStatusItem!
     var window: NSWindow?
-    var webView: WKWebView!
+    var unifiWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ n: Notification) {
         buildMenu()
@@ -69,23 +69,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
         NSApp.mainMenu = main
     }
 
-    @objc func reload() { webView?.reload() }
+    @objc func reload() { (NSApp.keyWindow?.contentView as? WKWebView)?.reload() }
 
     @objc func openUniFi() {
         guard let unifiURL = unifiURL else { return }
-        if !NSWorkspace.shared.open(unifiURL) {
-            let alert = NSAlert()
-            alert.messageText = "Could not open UniFi Network"
-            alert.informativeText = "macOS could not open the configured URL in your default browser."
-            alert.runModal()
-        }
+        unifiWindow = showWindow(url: unifiURL, existing: unifiWindow, frameName: "SurvyUniFiWindow")
     }
 
     func showWindow() {
-        if window == nil {
+        window = showWindow(url: url, existing: window, frameName: "SurvyWindow")
+    }
+
+    private func showWindow(url: URL, existing: NSWindow?, frameName: String) -> NSWindow {
+        let window: NSWindow
+        if let existing = existing {
+            window = existing
+        } else {
             let cfg = WKWebViewConfiguration()
             cfg.websiteDataStore = .default()
-            webView = WKWebView(frame: .zero, configuration: cfg)
+            let webView = WKWebView(frame: .zero, configuration: cfg)
             webView.uiDelegate = self
             webView.allowsBackForwardNavigationGestures = true
             webView.load(URLRequest(url: url))
@@ -97,12 +99,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, WKUIDelegate {
             w.titlebarAppearsTransparent = true
             w.isReleasedWhenClosed = false
             w.contentView = webView
-            w.setFrameAutosaveName("SurvyWindow")
-            if !w.setFrameUsingName("SurvyWindow") { w.center() }
+            w.setFrameAutosaveName(frameName)
+            if !w.setFrameUsingName(frameName) { w.center() }
             window = w
         }
         NSApp.activate(ignoringOtherApps: true)
-        window?.makeKeyAndOrderFront(nil)
+        window.makeKeyAndOrderFront(nil)
+        return window
     }
 
     // Open target=_blank links in the same window

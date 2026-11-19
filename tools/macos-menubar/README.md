@@ -3,8 +3,8 @@
 A small menu bar icon for macOS that opens the survy dashboard in its own window, with no location bar or toolbar. It is a single Swift file wrapping a `WKWebView`; it is not part of the router image and survy does not depend on it.
 
 - **Left-click** the icon: open the dashboard window (a second click brings it to the front).
-- **Right-click**: open UniFi Network in your default browser, or quit Survy.
-- The window remembers its size and position and keeps cookies between launches. Drag it by the slim title bar. ⌘W closes, ⌘R reloads, ⌘Q quits.
+- **Right-click**: open UniFi Network in its own window, or quit Survy.
+- Each window remembers its size and position and keeps cookies between launches. Drag it by the slim title bar. ⌘W closes, ⌘R reloads the active window, ⌘Q quits.
 - Links that would open a new tab load in the same window.
 
 ## Build and install
